@@ -1,3 +1,0 @@
-let $PLUGIN_PATH='~/.vim'
-
-source $PLUGIN_PATH/main
