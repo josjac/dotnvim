@@ -14,8 +14,8 @@ Plug 'Shougo/neosnippet-snippets'
 Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 
-" sytastic
-Plug 'scrooloose/syntastic'
+" neomake
+Plug 'neomake/neomake'
 
 " syntaxs
 Plug 'digitaltoad/vim-jade'
@@ -164,14 +164,6 @@ noremap <silent>,hs :vsplit<CR>
 noremap <silent>,s :split<CR>
 
 "---------------------------------------------------------------------------
-" Easy split navigation
-"--------------------------------------------------------------------------
-nnoremap <C-h> <C-w>h
-nnoremap <C-j> <C-w>j
-nnoremap <C-k> <C-w>k
-nnoremap <C-l> <C-w>l
-
-"---------------------------------------------------------------------------
 " window control 
 "--------------------------------------------------------------------------
 function Maxwin()
@@ -216,23 +208,12 @@ vmap <C-k> [egv
 "---------------------------------------------------------------------------
 nmap gV `[v`]
 
-"-----------------------------------------------------------------------------------------------------
-" syntastic
-"-----------------------------------------------------------------------------------------------------
-map <C-ENTER> :SyntasticCheck<CR>
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 0
-let g:syntastic_check_on_open = 0
-let g:syntastic_check_on_wq = 0
-let g:syntastic_javascript_checkers = ['eslint']
-let g:syntastic_javascript_eslint_exec = 'eslint_d'
-
 
 "-----------------------------------------------------------------------------------------------------
 " ctrlp 
 "-----------------------------------------------------------------------------------------------------
 map fb :CtrlPMRU<cr>
-map ff :CtrlP pwd<cr>
+map <C-p> :CtrlPClearAllCaches<cr>:CtrlP
 
 let g:ctrlp_custom_ignore = {
   \ 'dir':  '\v[\/]\.(git|hg|svn)|node_modules|build$',
@@ -295,11 +276,16 @@ let g:airline_powerline_fonts = 1
 " Color
 "-----------------------------------------------------------------------------------------------------
 set background=dark
-"colors PaperColor
-"let g:airline_theme='PaperColor'
 
 colors hybrid_material
 let g:airline_theme="hybrid"
+
+
+"-----------------------------------------------------------------------------------------------------
+" neomake
+"-----------------------------------------------------------------------------------------------------
+let g:neomake_javascript_enabled_makers = ['eslint']
+autocmd! BufWritePost * Neomake
 
 "-----------------------------------------------------------------------------------------------------
 " functions
