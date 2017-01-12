@@ -29,9 +29,8 @@ Plug 'ctrlpvim/ctrlp.vim'
 
 " colors
 Plug 'flazz/vim-colorschemes'
-Plug 'NLKNguyen/papercolor-theme'
-Plug 'kristijanhusak/vim-hybrid-material'
 Plug 'vim-airline/vim-airline-themes'
+Plug 'ayu-theme/ayu-vim'
 
 " git
 Plug 'tpope/vim-fugitive'
@@ -213,10 +212,10 @@ nmap gV `[v`]
 " ctrlp 
 "-----------------------------------------------------------------------------------------------------
 map fb :CtrlPMRU<cr>
-map <C-p> :CtrlPClearAllCaches<cr>:CtrlP
+let g:ctrlp_use_caching = 0
 
 let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\v[\/]\.(git|hg|svn)|node_modules|build$',
+  \ 'dir':  '\v[\/]\.(git|hg|svn)|node_modules|build|Resources|dist$',
   \ 'file': '\v\.(exe|so|dll|pyc)$'
   \ }
 
@@ -275,11 +274,11 @@ let g:airline_powerline_fonts = 1
 "-----------------------------------------------------------------------------------------------------
 " Color
 "-----------------------------------------------------------------------------------------------------
-set background=dark
-
-colors hybrid_material
-let g:airline_theme="hybrid"
-
+set background=light
+set termguicolors
+let g:airline_theme="simple"
+let ayucolor="light"
+colorscheme ayu
 
 "-----------------------------------------------------------------------------------------------------
 " neomake
