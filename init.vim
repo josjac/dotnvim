@@ -29,7 +29,8 @@ Plug 'ctrlpvim/ctrlp.vim'
 
 " colors
 Plug 'flazz/vim-colorschemes'
-Plug 'vim-airline/vim-airline-themes'
+" Plug 'vim-airline/vim-airline-themes'
+Plug 'ayu-theme/ayu-vim-airline'
 Plug 'ayu-theme/ayu-vim'
 
 " git
@@ -276,7 +277,7 @@ let g:airline_powerline_fonts = 1
 "-----------------------------------------------------------------------------------------------------
 set background=light
 set termguicolors
-let g:airline_theme="simple"
+let g:airline_theme="base16"
 let ayucolor="light"
 colorscheme ayu
 
