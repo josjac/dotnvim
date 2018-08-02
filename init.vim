@@ -3,53 +3,46 @@
 " ------------------------------------------------------------
 call plug#begin('~/.config/nvim/plugged')
 
-Plug 'bling/vim-airline'
-Plug 'kien/ctrlp.vim'
-
-"snipets
-Plug 'Shougo/neosnippet'
-Plug 'Shougo/neosnippet-snippets'
-
 "nerdtree
-Plug 'scrooloose/nerdtree'
-Plug 'Xuyuanp/nerdtree-git-plugin'
+"Plug 'scrooloose/nerdtree'
+"Plug 'Xuyuanp/nerdtree-git-plugin'
 
 " neomake
 Plug 'neomake/neomake'
+Plug 'carlitux/deoplete-ternjs'
 
 " syntaxs
-Plug 'digitaltoad/vim-jade'
+Plug 'digitaltoad/vim-pug'
 Plug 'wavded/vim-stylus'
-Plug 'kchmck/vim-coffee-script'
-Plug 'mxw/vim-jsx'
-Plug 'OrangeT/vim-csharp'
+Plug 'cakebaker/scss-syntax.vim'
+Plug 'leafgarland/typescript-vim'
 
 " finder
 Plug 'ctrlpvim/ctrlp.vim'
 
-" colors
+" ui
+Plug 'bling/vim-airline'
 Plug 'flazz/vim-colorschemes'
 " Plug 'vim-airline/vim-airline-themes'
 Plug 'ayu-theme/ayu-vim-airline'
 Plug 'ayu-theme/ayu-vim'
 
 " git
-Plug 'tpope/vim-fugitive'
+"Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
+Plug 'jreybert/vimagit'
 
 " utils
 Plug 'terryma/vim-multiple-cursors'
-Plug 'maksimr/vim-jsbeautify'
-Plug 'thinca/vim-quickrun'
-Plug 'tpope/vim-unimpaired'
+"Plug 'maksimr/vim-jsbeautify'
+"Plug 'thinca/vim-quickrun'
+"Plug 'tpope/vim-unimpaired'
 Plug 'mattn/emmet-vim'
-Plug 'unicodeswitch.vim'
+"Plug 'unicodeswitch.vim'
 Plug 'tpope/vim-surround'
 Plug 'yggdroot/indentline'
 Plug 'scrooloose/nerdcommenter'
 Plug 'tmhedberg/SimpylFold'
-
-Plug 'carlitux/deoplete-ternjs'
 
 " Add plugins to &runtimepath
 call plug#end()
@@ -178,11 +171,11 @@ noremap <silent>,0 :<C-w-=><CR>
 "---------------------------------------------------------------------------
 " NERDTree
 "---------------------------------------------------------------------------
-noremap <silent>,n :NERDTreeToggle<CR>
-noremap <silent>,fn :NERDTreeFind<CR>
-let NERDTreeIgnore=['\~$','\.pyc$']
-let g:nerdtree_tabs_open_on_gui_startup=0
-let g:nerdtree_tabs_autoclose=0
+"noremap <silent>,n :NERDTreeToggle<CR>
+"noremap <silent>,fn :NERDTreeFind<CR>
+"let NERDTreeIgnore=['\~$','\.pyc$']
+"let g:nerdtree_tabs_open_on_gui_startup=0
+"let g:nerdtree_tabs_autoclose=0
 
 "---------------------------------------------------------------------------
 " Tab nav
@@ -212,22 +205,14 @@ nmap gV `[v`]
 "-----------------------------------------------------------------------------------------------------
 " ctrlp 
 "-----------------------------------------------------------------------------------------------------
-map fb :CtrlPMRU<cr>
-let g:ctrlp_use_caching = 0
+set autochdir
+map fb :CtrlPBuffer<cr>
+let g:ctrlp_show_hidden = 1
 
-let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\v[\/]\.(git|hg|svn)|node_modules|build|Resources|dist$',
-  \ 'file': '\v\.(exe|so|dll|pyc)$'
-  \ }
-
-"-----------------------------------------------------------------------------------------------------
-" snippets 
-"-----------------------------------------------------------------------------------------------------
-" Enable snipMate compatibility feature.
-let g:neosnippet#enable_snipmate_compatibility = 1
-
-" Tell Neosnippet about the other snippets
-let g:neosnippet#snippets_directory='~/.vim/snippets'
+"let g:ctrlp_custom_ignore = {
+  "\ 'dir':  '\v[\/]\.(git|hg|svn)|node_modules|build|Resources|dist$',
+  "\ 'file': '\v\.(exe|so|dll|pyc)$'
+  "\ }
 
 " Plugin key-mappings.
 imap <C-k>     <Plug>(neosnippet_expand_or_jump)
@@ -235,25 +220,25 @@ smap <C-k>     <Plug>(neosnippet_expand_or_jump)
 xmap <C-k>     <Plug>(neosnippet_expand_target)
 
 " SuperTab like snippets behavior.
-imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-\ "\<Plug>(neosnippet_expand_or_jump)"
-\: pumvisible() ? "\<C-n>" : "\<TAB>"
-smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-\ "\<Plug>(neosnippet_expand_or_jump)"
-\: "\<TAB>"
+"imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+"\ "\<Plug>(neosnippet_expand_or_jump)"
+"\: pumvisible() ? "\<C-n>" : "\<TAB>"
+"smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+"\ "\<Plug>(neosnippet_expand_or_jump)"
+"\: "\<TAB>"
 
 " For snippet_complete marker.
-if has('conceal')
-  set conceallevel=2 concealcursor=niv
-endif
+"if has('conceal')
+  "set conceallevel=2 concealcursor=niv
+"endif
 
 "-----------------------------------------------------------------------------------------------------
 " vim-jsbeautify
 "-----------------------------------------------------------------------------------------------------
-let g:config_Beautifier = {
-  \ 'js': { 'indent_style': 'space', 'indent_size': 2 }
-  \ }
-noremap <leader>jsformat :call JsBeautify()<cr>
+"let g:config_Beautifier = {
+  "\ 'js': { 'indent_style': 'space', 'indent_size': 2 }
+  "\ }
+"noremap <leader>jsformat :call JsBeautify()<cr>
 
 "-----------------------------------------------------------------------------------------------------
 " Emmet
@@ -262,9 +247,10 @@ let g:user_emmet_leader_key = '<c-e>'
 
 
 "-----------------------------------------------------------------------------------------------------
-" titatinum
+" titatinum, json
 "-----------------------------------------------------------------------------------------------------
 au BufNewFile,BufRead *.tss,*.webapp set filetype=tsscl
+au BufRead *.json set conceallevel=0
 
 "-----------------------------------------------------------------------------------------------------
 " Vim airline
@@ -275,10 +261,8 @@ let g:airline_powerline_fonts = 1
 "-----------------------------------------------------------------------------------------------------
 " Color
 "-----------------------------------------------------------------------------------------------------
-set background=light
-set termguicolors
-let g:airline_theme="base16"
-let ayucolor="light"
+set background=dark
+let ayucolor="mirage"
 colorscheme ayu
 
 "-----------------------------------------------------------------------------------------------------
@@ -290,7 +274,5 @@ autocmd! BufWritePost * Neomake
 "-----------------------------------------------------------------------------------------------------
 " functions
 "-----------------------------------------------------------------------------------------------------
-source ~/.config/nvim/functions/quickrun.vim
 source ~/.config/nvim/functions/entities.vim
 source ~/.config/nvim/functions/unicode.vim
-source ~/.config/nvim/functions/regexp.vim
