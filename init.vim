@@ -5,7 +5,6 @@ call plug#begin('~/.config/nvim/plugged')
 
 " neomake
 Plug 'neomake/neomake'
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 
 " Language support
 Plug 'othree/html5.vim'
@@ -13,14 +12,17 @@ Plug 'digitaltoad/vim-pug'
 Plug 'wavded/vim-stylus'
 Plug 'cakebaker/scss-syntax.vim'
 
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'HerringtonDarkholme/yats.vim'
 Plug 'mhartington/nvim-typescript',{ 'do': './install.sh' }
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
 Plug 'rhysd/npm-debug-log.vim'
 Plug 'neovim/node-host', { 'do': 'npm install' }
-"Plug 'cdata/vim-tagged-template'
 Plug 'steelsojka/deoplete-flow'
+Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
+"Plug 'ternjs/tern_for_vim'
+
 
 " finder
 Plug 'ctrlpvim/ctrlp.vim'
@@ -247,6 +249,7 @@ let g:used_javascript_libs = 'jquery,requirejs,lodash,underscore'
 " deoplete
 "-----------------------------------------------------------------------------------------------------
 let g:deoplete#enable_at_startup = 1
+let g:deoplete#sources#ternjs#tern_bin = '/Users/jayon/.nvm/versions/node/v8.11.3/bin/tern'
 
 "-----------------------------------------------------------------------------------------------------
 " functions
