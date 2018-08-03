@@ -1,4 +1,4 @@
-function Entities()
+function! Entities()
   silent s/À/\&Agrave;/eg
   silent s/Á/\&Aacute;/eg
   silent s/Â/\&Acirc;/eg
