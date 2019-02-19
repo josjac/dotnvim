@@ -20,8 +20,12 @@ Plug 'mxw/vim-jsx'
 Plug 'rhysd/npm-debug-log.vim'
 Plug 'neovim/node-host', { 'do': 'npm install' }
 Plug 'steelsojka/deoplete-flow'
-Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
-"Plug 'ternjs/tern_for_vim'
+Plug 'carlitux/deoplete-ternjs'
+Plug 'ternjs/tern_for_vim'
+Plug 'scrooloose/nerdtree'
+
+Plug 'Quramy/tsuquyomi'
+Plug 'Quramy/vim-js-pretty-template'
 
 
 " finder
@@ -43,7 +47,7 @@ Plug 'mattn/emmet-vim'
 Plug 'tpope/vim-surround'
 Plug 'yggdroot/indentline'
 Plug 'scrooloose/nerdcommenter'
-Plug 'tmhedberg/SimpylFold'
+Plug 'pseewald/vim-anyfold'
 
 " Add plugins to &runtimepath
 call plug#end()
@@ -124,16 +128,15 @@ set noswapfile
 " Folding
 "--------------------------------------------------------------------------
 " fold based on indent
-set foldmethod=indent
-
-" deepest fold is 10 levels
-set foldnestmax=10
+"set foldmethod=indent
 
 " dont fold by default
-set nofoldenable
+"set nofoldenable
 
-" this is just what i use
-set foldlevel=1
+let g:anyfold_activate=1
+set foldlevel=99
+hi Folded term=NONE cterm=NONE
+
 
 
 "---------------------------------------------------------------------------
@@ -188,7 +191,6 @@ nmap gV `[v`]
 "-----------------------------------------------------------------------------------------------------
 " ctrlp 
 "-----------------------------------------------------------------------------------------------------
-set autochdir
 map fb :CtrlPBuffer<cr>
 let g:ctrlp_show_hidden = 1
 
@@ -212,7 +214,7 @@ let g:user_emmet_leader_key = '<c-e>'
 "-----------------------------------------------------------------------------------------------------
 " json
 "-----------------------------------------------------------------------------------------------------
-au BufRead .* set conceallevel=0
+au FileType json set conceallevel=0
 
 "-----------------------------------------------------------------------------------------------------
 " Vim airline
@@ -224,8 +226,10 @@ let g:airline_powerline_fonts = 1
 " Color
 "-----------------------------------------------------------------------------------------------------
 set background=dark
-let ayucolor="mirage"
-colorscheme ayu
+"let ayucolor='mirage'
+"colorscheme ayu
+colorscheme lucid
+
 
 "-----------------------------------------------------------------------------------------------------
 " neomake
@@ -249,10 +253,19 @@ let g:used_javascript_libs = 'jquery,requirejs,lodash,underscore'
 " deoplete
 "-----------------------------------------------------------------------------------------------------
 let g:deoplete#enable_at_startup = 1
-let g:deoplete#sources#ternjs#tern_bin = '/Users/jayon/.nvm/versions/node/v8.11.3/bin/tern'
+"let g:deoplete#sources#ternjs#tern_bin = '/Users/jayon/.nvm/versions/node/v8.11.3/bin/tern'
+let g:tern#command = ['tern']
+let g:tern#arguments = ['--persistent']
 
 "-----------------------------------------------------------------------------------------------------
-" functions
+" nerdtree
 "-----------------------------------------------------------------------------------------------------
-source ~/.config/nvim/functions/entities.vim
-source ~/.config/nvim/functions/unicode.vim
+let g:NERDTreeHijackNetrw = 0
+nnoremap <Leader>n :NERDTreeToggle<CR>
+
+
+"-----------------------------------------------------------------------------------------------------
+" escape
+"-----------------------------------------------------------------------------------------------------
+map <Leader>ee :call escape#entitie()<CR>
+map <Leader>eu :call escape#unicode()<CR>
