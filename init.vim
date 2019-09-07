@@ -3,39 +3,34 @@
 " ------------------------------------------------------------
 call plug#begin('~/.config/nvim/plugged')
 
-" neomake
-Plug 'neomake/neomake'
-
 " Language support
 Plug 'othree/html5.vim'
 Plug 'digitaltoad/vim-pug'
 Plug 'wavded/vim-stylus'
 Plug 'cakebaker/scss-syntax.vim'
-
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'HerringtonDarkholme/yats.vim'
-Plug 'mhartington/nvim-typescript',{ 'do': './install.sh' }
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
 Plug 'rhysd/npm-debug-log.vim'
-Plug 'neovim/node-host', { 'do': 'npm install' }
-Plug 'steelsojka/deoplete-flow'
-Plug 'carlitux/deoplete-ternjs'
-Plug 'ternjs/tern_for_vim'
 Plug 'scrooloose/nerdtree'
-
+Plug 'othree/jspc.vim'
+Plug 'elzr/vim-json'
 Plug 'Quramy/tsuquyomi'
 Plug 'Quramy/vim-js-pretty-template'
-
+Plug 'posva/vim-vue'
+Plug 'neoclide/coc.nvim', { 'tag': '*', 'branch': 'release' }
+Plug 'burner/vim-svelte'
+Plug 'amadeus/vim-mjml'
+Plug 'chooh/brightscript.vim'
 
 " finder
 Plug 'ctrlpvim/ctrlp.vim'
 
 " ui
-Plug 'bling/vim-airline'
 Plug 'flazz/vim-colorschemes'
 Plug 'ayu-theme/ayu-vim-airline'
 Plug 'ayu-theme/ayu-vim'
+Plug 'ryanoasis/vim-devicons'
 
 " git
 Plug 'airblade/vim-gitgutter'
@@ -47,7 +42,13 @@ Plug 'mattn/emmet-vim'
 Plug 'tpope/vim-surround'
 Plug 'yggdroot/indentline'
 Plug 'scrooloose/nerdcommenter'
-Plug 'pseewald/vim-anyfold'
+Plug 'editorconfig/editorconfig-vim'
+Plug 'tpope/vim-unimpaired'
+Plug 'editorconfig/editorconfig-vim'
+Plug 'prettier/vim-prettier', {
+  \ 'do': 'yarn install',
+  \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'yaml', 'html'] }
+Plug 'alvan/vim-closetag'
 
 " Add plugins to &runtimepath
 call plug#end()
@@ -58,8 +59,9 @@ call plug#end()
 " ------------------------------------------------------------
 syntax on
 
+set mouse=a
+
 " fuentes: https://github.com/powerline/fonts
-set guifont=Droid\ Sans\ Mono\ for\ Powerline:h14
 set lsp=3
 
 " line numbers
@@ -82,6 +84,7 @@ match errorMsg /[^\t]\zs\t\+/
 
 " Set mapleader
 let mapleader = ","
+
 let g:mapleader = ","
 
 " Do not redraw, when running macros.. lazyredraw
@@ -92,64 +95,77 @@ set whichwrap+=<,>,h,l
 
 " Ignore case when searching
 set ignorecase
+
 set incsearch
+
 set smartcase
+
+set hlsearch
 
 " Set magic on
 set magic
 
 " No sound on errors.
 set noerrorbells
+
 set novisualbell
 
 " show matching bracets
 set showmatch
+
 set showmode
+
 set ruler
 
 " Reselect visual block after indent/outdent
 vnoremap < <gv
+
 vnoremap > >gv
-
-" no wrap
-set nowrap
-
-" wrap line
-set colorcolumn=80
 
 "---------------------------------------------------------------------------
 " Files and Backups
 "---------------------------------------------------------------------------
 set nobackup
-set nowb
-set noswapfile
 
+set nowb
+
+set noswapfile
 
 " Folding
 "--------------------------------------------------------------------------
 " fold based on indent
-"set foldmethod=indent
+set foldmethod=indent
 
 " dont fold by default
-"set nofoldenable
+set nofoldenable
 
-let g:anyfold_activate=1
-set foldlevel=99
-hi Folded term=NONE cterm=NONE
+"-----------------------------------------------------------------------------------------------------
+" ctrlp 
+"-----------------------------------------------------------------------------------------------------
+map fb :CtrlPBuffer<cr>
 
+map ft :CtrlPBufTag<cr>
 
+let g:ctrlp_show_hidden = 1
 
-"---------------------------------------------------------------------------
-" save CTRL-S
-"--------------------------------------------------------------------------
-nmap <C-s> :w<CR>
-imap <C-s> <Esc>:w<CR>a
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\v[\/]\.(git|hg|svn)|node_modules|build|Resources|dist$',
+  \ 'file': '\v\.(exe|so|dll|pyc)$'
+  \ }
 
-"---------------------------------------------------------------------------
-" window split 
-"--------------------------------------------------------------------------
-noremap <silent>,hs :vsplit<CR>
-noremap <silent>,s :split<CR>
+"-----------------------------------------------------------------------------------------------------
+" nerdtree
+"-----------------------------------------------------------------------------------------------------
+let g:NERDTreeHijackNetrw = 0
+
+nnoremap <Leader>n :NERDTreeToggle<CR>
+
+"-----------------------------------------------------------------------------------------------------
+" Vim airline
+"-----------------------------------------------------------------------------------------------------
+let g:airline#extensions#tabline#enabled = 1
+
+let g:airline_powerline_fonts = 1
 
 "---------------------------------------------------------------------------
 " window control 
@@ -170,15 +186,13 @@ nnoremap <C-TAB> :tabn<CR>
 noremap <CS-TAB> :tabp<CR>
 
 "---------------------------------------------------------------------------
-  " Bubble single lines
+" Unimpaired
 "---------------------------------------------------------------------------
+" Bubble single lines
 nmap <C-k> [e
 nmap <C-j> ]e
 
-
-"---------------------------------------------------------------------------
 " Bubble multiple lines
-"---------------------------------------------------------------------------
 vmap <C-J> ]egv
 vmap <C-k> [egv
 
@@ -188,81 +202,83 @@ vmap <C-k> [egv
 nmap gV `[v`]
 
 
-"-----------------------------------------------------------------------------------------------------
-" ctrlp 
-"-----------------------------------------------------------------------------------------------------
-map fb :CtrlPBuffer<cr>
-let g:ctrlp_show_hidden = 1
-
-let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\v[\/]\.(git|hg|svn)|node_modules|build|Resources|dist$',
-  \ 'file': '\v\.(exe|so|dll|pyc)$'
-  \ }
-
 " Plugin key-mappings.
 imap <C-k>     <Plug>(neosnippet_expand_or_jump)
 smap <C-k>     <Plug>(neosnippet_expand_or_jump)
 xmap <C-k>     <Plug>(neosnippet_expand_target)
-
 
 "-----------------------------------------------------------------------------------------------------
 " Emmet
 "-----------------------------------------------------------------------------------------------------
 let g:user_emmet_leader_key = '<c-e>'
 
-
 "-----------------------------------------------------------------------------------------------------
 " json
 "-----------------------------------------------------------------------------------------------------
-au FileType json set conceallevel=0
+let g:vim_json_syntax_conceal = 0
 
 "-----------------------------------------------------------------------------------------------------
-" Vim airline
+" Theme
 "-----------------------------------------------------------------------------------------------------
-let g:airline#extensions#tabline#enabled = 1
-let g:airline_powerline_fonts = 1
+" no wrap
+set nowrap
 
-"-----------------------------------------------------------------------------------------------------
-" Color
-"-----------------------------------------------------------------------------------------------------
+" wrap line
+set colorcolumn=80
+
+highlight Pmenu ctermbg=gray guibg=gray
+
+set cursorline
+
+set encoding=UTF-8
+
+set guifont=Droid\ Sans\ Mono\ Nerd\ Font\ Complete:h14
+
+set termguicolors
+
 set background=dark
-"let ayucolor='mirage'
+
+"let ayucolor='dark'
+
+"let g:airline_theme='dark'
+
 "colorscheme ayu
-colorscheme lucid
 
-
-"-----------------------------------------------------------------------------------------------------
-" neomake
-"-----------------------------------------------------------------------------------------------------
-let g:neomake_javascript_enabled_makers = ['eslint']
-autocmd! BufWritePost * Neomake
+colorscheme molokai
 
 "-----------------------------------------------------------------------------------------------------
 " vim-javascript
 "-----------------------------------------------------------------------------------------------------
-let g:javascript_plugin_flow = 1
-let g:jsx_ext_required = 0
+"let g:jsx_ext_required = 0
 augroup javascript_folding
   au!
-  au FileType javascript setlocal foldmethod=syntax
+  au FileType javascript setlocal foldmethod=indent
 augroup END
-let g:used_javascript_libs = 'jquery,requirejs,lodash,underscore'
-
 
 "-----------------------------------------------------------------------------------------------------
-" deoplete
+" #COC
 "-----------------------------------------------------------------------------------------------------
-let g:deoplete#enable_at_startup = 1
-"let g:deoplete#sources#ternjs#tern_bin = '/Users/jayon/.nvm/versions/node/v8.11.3/bin/tern'
-let g:tern#command = ['tern']
-let g:tern#arguments = ['--persistent']
+"inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+"autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
+
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+nnoremap <silent> <Leader>K :call <SID>show_documentation()<CR>
+function! s:show_documentation()
+  if &filetype == 'vim'
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
 
 "-----------------------------------------------------------------------------------------------------
-" nerdtree
+" vim-closetag
 "-----------------------------------------------------------------------------------------------------
-let g:NERDTreeHijackNetrw = 0
-nnoremap <Leader>n :NERDTreeToggle<CR>
-
+let g:closetag_filenames = '*.xml,*.html'
 
 "-----------------------------------------------------------------------------------------------------
 " escape
