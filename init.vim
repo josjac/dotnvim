@@ -22,6 +22,7 @@ Plug 'neoclide/coc.nvim', { 'tag': '*', 'branch': 'release' }
 Plug 'burner/vim-svelte'
 Plug 'amadeus/vim-mjml'
 Plug 'chooh/brightscript.vim'
+Plug 'bumaociyuan/vim-swift'
 
 " finder
 Plug 'ctrlpvim/ctrlp.vim'
