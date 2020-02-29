@@ -27,12 +27,6 @@ Plug 'bumaociyuan/vim-swift'
 " finder
 Plug 'ctrlpvim/ctrlp.vim'
 
-" ui
-Plug 'flazz/vim-colorschemes'
-Plug 'ayu-theme/ayu-vim-airline'
-Plug 'ayu-theme/ayu-vim'
-Plug 'ryanoasis/vim-devicons'
-
 " git
 Plug 'airblade/vim-gitgutter'
 Plug 'jreybert/vimagit'
@@ -50,6 +44,8 @@ Plug 'prettier/vim-prettier', {
   \ 'do': 'yarn install',
   \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'yaml', 'html'] }
 Plug 'alvan/vim-closetag'
+Plug 'Shougo/echodoc.vim'
+Plug 'othree/jsdoc-syntax.vim'
 
 " Add plugins to &runtimepath
 call plug#end()
@@ -79,6 +75,7 @@ set shiftwidth=2
 
 " filetype indent
 autocmd FileType python setlocal shiftwidth=4 softtabstop=4
+autocmd FileType java setlocal shiftwidth=4 softtabstop=4
 
 " Error tab
 match errorMsg /[^\t]\zs\t\+/
@@ -233,19 +230,19 @@ set cursorline
 
 set encoding=UTF-8
 
-set guifont=Droid\ Sans\ Mono\ Nerd\ Font\ Complete:h14
+"set guifont=Droid\ Sans\ Mono\ Nerd\ Font\ Complete:h14
+set guifont=Hack:h14
 
-set termguicolors
+if (has("termguicolors"))
+ set termguicolors
+endif
 
-set background=dark
+"set background=dark
 
-"let ayucolor='dark'
-
-"let g:airline_theme='dark'
-
-"colorscheme ayu
-
-colorscheme molokai
+"colorscheme shades_of_purple
+"colorscheme cyberpunkneon
+"colorscheme neuromancer
+colorscheme demo
 
 "-----------------------------------------------------------------------------------------------------
 " vim-javascript
@@ -276,6 +273,9 @@ function! s:show_documentation()
   endif
 endfunction
 
+" Highlight the symbol and its references when holding the cursor.
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
 "-----------------------------------------------------------------------------------------------------
 " vim-closetag
 "-----------------------------------------------------------------------------------------------------
@@ -286,3 +286,20 @@ let g:closetag_filenames = '*.xml,*.html'
 "-----------------------------------------------------------------------------------------------------
 map <Leader>ee :call escape#entitie()<CR>
 map <Leader>eu :call escape#unicode()<CR>
+
+"-----------------------------------------------------------------------------------------------------
+" Edit
+"-----------------------------------------------------------------------------------------------------
+vnoremap <C-c> "+y
+nnoremap <C-v> "+p
+inoremap <C-v> <Esc>"+p A
+
+"-----------------------------------------------------------------------------------------------------
+" Echodoc
+"-----------------------------------------------------------------------------------------------------
+" Or, you could use vim's popup window feature.
+let g:echodoc#enable_at_startup = 1
+let g:echodoc#type = 'popup'
+" To use a custom highlight for the popup window,
+" change Pmenu to your highlight group
+highlight link EchoDocPopup Pmenu

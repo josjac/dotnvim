@@ -1,3 +1,4 @@
 {
-  "tsserver.npm": "/Users/jayon/.nvm/versions/node/v8.11.3/bin/npm"
+  "tsserver.npm": "/Users/jayon/.nvm/versions/node/v8.11.3/bin/npm",
+  "coc.preferences.echodocSupport": true
 }
