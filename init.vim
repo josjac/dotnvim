@@ -7,22 +7,22 @@ call plug#begin('~/.config/nvim/plugged')
 Plug 'othree/html5.vim'
 Plug 'digitaltoad/vim-pug'
 Plug 'wavded/vim-stylus'
-Plug 'cakebaker/scss-syntax.vim'
-Plug 'HerringtonDarkholme/yats.vim'
+"Plug 'cakebaker/scss-syntax.vim'
+"Plug 'HerringtonDarkholme/yats.vim'
 Plug 'pangloss/vim-javascript'
-Plug 'mxw/vim-jsx'
-Plug 'rhysd/npm-debug-log.vim'
+"Plug 'mxw/vim-jsx'
+"Plug 'rhysd/npm-debug-log.vim'
 Plug 'scrooloose/nerdtree'
-Plug 'othree/jspc.vim'
+"Plug 'othree/jspc.vim'
 Plug 'elzr/vim-json'
-Plug 'Quramy/tsuquyomi'
-Plug 'Quramy/vim-js-pretty-template'
+"Plug 'Quramy/tsuquyomi'
+"Plug 'Quramy/vim-js-pretty-template'
 Plug 'posva/vim-vue'
 Plug 'neoclide/coc.nvim', { 'tag': '*', 'branch': 'release' }
-Plug 'burner/vim-svelte'
-Plug 'amadeus/vim-mjml'
+"Plug 'burner/vim-svelte'
+"Plug 'amadeus/vim-mjml'
 Plug 'chooh/brightscript.vim'
-Plug 'bumaociyuan/vim-swift'
+"Plug 'bumaociyuan/vim-swift'
 
 " finder
 Plug 'ctrlpvim/ctrlp.vim'
@@ -46,6 +46,10 @@ Plug 'prettier/vim-prettier', {
 Plug 'alvan/vim-closetag'
 Plug 'Shougo/echodoc.vim'
 Plug 'othree/jsdoc-syntax.vim'
+Plug 'ap/vim-css-color'
+
+" theme
+Plug 'challenger-deep-theme/vim'
 
 " Add plugins to &runtimepath
 call plug#end()
@@ -237,12 +241,10 @@ if (has("termguicolors"))
  set termguicolors
 endif
 
-"set background=dark
+colorscheme challenger_deep
 
-"colorscheme shades_of_purple
-"colorscheme cyberpunkneon
-"colorscheme neuromancer
-colorscheme demo
+hi! Normal ctermbg=NONE guibg=NONE 
+hi! NonText ctermbg=NONE guibg=NONE guifg=NONE ctermfg=NONE
 
 "-----------------------------------------------------------------------------------------------------
 " vim-javascript
@@ -264,6 +266,7 @@ nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 
+" Muestra la documentacion ,K
 nnoremap <silent> <Leader>K :call <SID>show_documentation()<CR>
 function! s:show_documentation()
   if &filetype == 'vim'
@@ -300,6 +303,12 @@ inoremap <C-v> <Esc>"+p A
 " Or, you could use vim's popup window feature.
 let g:echodoc#enable_at_startup = 1
 let g:echodoc#type = 'popup'
+set cmdheight=2
 " To use a custom highlight for the popup window,
 " change Pmenu to your highlight group
 highlight link EchoDocPopup Pmenu
+
+"-----------------------------------------------------------------------------------------------------
+" vim-javascript
+"-----------------------------------------------------------------------------------------------------
+let g:javascript_plugin_jsdoc = 1
