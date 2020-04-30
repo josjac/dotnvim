@@ -1,4 +1,8 @@
 {
-  "tsserver.npm": "/Users/jayon/.nvm/versions/node/v8.11.3/bin/npm",
-  "coc.preferences.echodocSupport": true
+  "tsserver.npm": "/Users/joz/.nvm/versions/node/v10.17.0/bin/npm",
+  "coc.preferences.echodocSupport": true,
+  "eslint.quiet": false,
+  "eslint.nodePath": "/Users/joz/.nvm/versions/node/v10.17.0/lib/node_modules",
+  "eslint.filetypes": ["brs","javascript","typescript"],
+  "coc.preferences.noselect": false
 }
