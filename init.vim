@@ -4,32 +4,15 @@
 call plug#begin('~/.config/nvim/plugged')
 
 " Language support
-Plug 'othree/html5.vim'
-Plug 'digitaltoad/vim-pug'
-Plug 'wavded/vim-stylus'
-"Plug 'cakebaker/scss-syntax.vim'
-"Plug 'HerringtonDarkholme/yats.vim'
-Plug 'pangloss/vim-javascript'
-"Plug 'mxw/vim-jsx'
-"Plug 'rhysd/npm-debug-log.vim'
 Plug 'scrooloose/nerdtree'
-"Plug 'othree/jspc.vim'
-Plug 'elzr/vim-json'
-"Plug 'Quramy/tsuquyomi'
-"Plug 'Quramy/vim-js-pretty-template'
-Plug 'posva/vim-vue'
 Plug 'neoclide/coc.nvim', { 'tag': '*', 'branch': 'release' }
-"Plug 'burner/vim-svelte'
 "Plug 'amadeus/vim-mjml'
 Plug 'chooh/brightscript.vim'
-"Plug 'bumaociyuan/vim-swift'
+Plug 'sheerun/vim-polyglot'
 
 " finder
-Plug 'ctrlpvim/ctrlp.vim'
-
-" git
-Plug 'airblade/vim-gitgutter'
-Plug 'jreybert/vimagit'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
 
 " utils
 Plug 'terryma/vim-multiple-cursors'
@@ -38,7 +21,6 @@ Plug 'tpope/vim-surround'
 Plug 'yggdroot/indentline'
 Plug 'scrooloose/nerdcommenter'
 Plug 'editorconfig/editorconfig-vim'
-Plug 'tpope/vim-unimpaired'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'prettier/vim-prettier', {
   \ 'do': 'yarn install',
@@ -49,7 +31,7 @@ Plug 'othree/jsdoc-syntax.vim'
 Plug 'ap/vim-css-color'
 
 " theme
-Plug 'challenger-deep-theme/vim'
+Plug 'ayu-theme/ayu-vim'
 
 " Add plugins to &runtimepath
 call plug#end()
@@ -67,6 +49,7 @@ set lsp=3
 
 " line numbers
 set nu
+set rnu
 
 " Use spaces instead tabs
 set expandtab
@@ -77,9 +60,10 @@ set tabstop=2
 " indents of 
 set shiftwidth=2
 
-" filetype indent
+" filetype 
 autocmd FileType python setlocal shiftwidth=4 softtabstop=4
 autocmd FileType java setlocal shiftwidth=4 softtabstop=4
+autocmd BufNewFile,BufRead *.tss set syntax=scss
 
 " Error tab
 match errorMsg /[^\t]\zs\t\+/
@@ -136,7 +120,7 @@ set noswapfile
 " Folding
 "--------------------------------------------------------------------------
 " fold based on indent
-set foldmethod=indent
+set fdm=indent
 
 " dont fold by default
 set nofoldenable
@@ -144,16 +128,24 @@ set nofoldenable
 "-----------------------------------------------------------------------------------------------------
 " ctrlp 
 "-----------------------------------------------------------------------------------------------------
-map fb :CtrlPBuffer<cr>
+"map fb :CtrlPBuffer<cr>
 
-map ft :CtrlPBufTag<cr>
+"map ft :CtrlPBufTag<cr>
 
-let g:ctrlp_show_hidden = 1
+"let g:ctrlp_show_hidden = 1
 
-let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\v[\/]\.(git|hg|svn)|node_modules|build|Resources|dist$',
-  \ 'file': '\v\.(exe|so|dll|pyc)$'
-  \ }
+"let g:ctrlp_custom_ignore = {
+  "\ 'dir':  '\v[\/]\.(git|hg|svn)|node_modules|build|Resources|dist$',
+  "\ 'file': '\v\.(exe|so|dll|pyc)$'
+  "\ }
+
+"-----------------------------------------------------------------------------------------------------
+" fzf 
+"-----------------------------------------------------------------------------------------------------
+let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6 } }
+let $FZF_DEFAULT_COMMAND='fd --type f'
+map <C-p> :FZF<cr>
+map fb :Buffers<cr>
 
 "-----------------------------------------------------------------------------------------------------
 " nerdtree
@@ -235,13 +227,15 @@ set cursorline
 set encoding=UTF-8
 
 "set guifont=Droid\ Sans\ Mono\ Nerd\ Font\ Complete:h14
-set guifont=Hack:h14
+"set guifont=Hack:h14
+set guifont=Fira\ Code:h14
 
 if (has("termguicolors"))
  set termguicolors
 endif
 
-colorscheme challenger_deep
+let ayucolor="mirage" 
+colorscheme ayu
 
 hi! Normal ctermbg=NONE guibg=NONE 
 hi! NonText ctermbg=NONE guibg=NONE guifg=NONE ctermfg=NONE
