@@ -1,10 +1,16 @@
 {
-  "tsserver.npm": "/Users/joz/.nvm/versions/node/v10.17.0/bin/npm",
-  "coc.preferences.echodocSupport": false,
-  "coc.preferences.noselect": false,
-  "javascript.suggestionActions.enabled": false,
-  "eslint.quiet": false,
-  "eslint.nodePath": "/Users/joz/.nvm/versions/node/v10.17.0/lib/node_modules",
+  "tsserver.npm": "$NVM_BIN/npm",
+  // ------------------------------------
+  // eslint
+  "eslint.nodePath": "$NVM_BIN/../lib/node_modules",
   "eslint.filetypes": ["brs","javascript","typescript"],
-  "eslint.run": "onSave"
+  "eslint.run": "onType",
+  // ------------------------------------
+  "eslint.enabled": true,
+  "suggest.noselect": false,
+  // ------------------------------------
+  // explorer
+  "explorer.icon.enableNerdfont": "on",
+  "explorer.file.showHiddenFiles": false
+  // ------------------------------------
 }

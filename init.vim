@@ -4,34 +4,42 @@
 call plug#begin('~/.config/nvim/plugged')
 
 " Language support
-Plug 'scrooloose/nerdtree'
+"Plug 'scrooloose/nerdtree'
 Plug 'neoclide/coc.nvim', { 'tag': '*', 'branch': 'release' }
 "Plug 'amadeus/vim-mjml'
-Plug 'chooh/brightscript.vim'
+"Plug 'chooh/brightscript.vim'
+" ---------------------------------------------
+" A collection of language packs for Vim.
 Plug 'sheerun/vim-polyglot'
+" ---------------------------------------------
 
 " finder
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
 
 " utils
 Plug 'terryma/vim-multiple-cursors'
 Plug 'mattn/emmet-vim'
-Plug 'tpope/vim-surround'
+Plug 'chrisbra/vim-xml-runtime'
+"Plug 'tpope/vim-surround'
+
+" ---------------------------------------------
+" This plugin is used for displaying thin vertical lines at each indentation
+" level 
 Plug 'yggdroot/indentline'
+" ---------------------------------------------
+"
 Plug 'scrooloose/nerdcommenter'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'editorconfig/editorconfig-vim'
-Plug 'prettier/vim-prettier', {
-  \ 'do': 'yarn install',
-  \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'yaml', 'html'] }
 Plug 'alvan/vim-closetag'
-Plug 'Shougo/echodoc.vim'
 Plug 'othree/jsdoc-syntax.vim'
 Plug 'ap/vim-css-color'
 
 " theme
 Plug 'ayu-theme/ayu-vim'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 
 " Add plugins to &runtimepath
 call plug#end()
@@ -126,39 +134,9 @@ set fdm=indent
 set nofoldenable
 
 "-----------------------------------------------------------------------------------------------------
-" ctrlp 
-"-----------------------------------------------------------------------------------------------------
-"map fb :CtrlPBuffer<cr>
-
-"map ft :CtrlPBufTag<cr>
-
-"let g:ctrlp_show_hidden = 1
-
-"let g:ctrlp_custom_ignore = {
-  "\ 'dir':  '\v[\/]\.(git|hg|svn)|node_modules|build|Resources|dist$',
-  "\ 'file': '\v\.(exe|so|dll|pyc)$'
-  "\ }
-
-"-----------------------------------------------------------------------------------------------------
-" fzf 
-"-----------------------------------------------------------------------------------------------------
-let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6 } }
-let $FZF_DEFAULT_COMMAND='fd --type f'
-map <C-p> :FZF<cr>
-map fb :Buffers<cr>
-
-"-----------------------------------------------------------------------------------------------------
-" nerdtree
-"-----------------------------------------------------------------------------------------------------
-let g:NERDTreeHijackNetrw = 0
-
-nnoremap <Leader>n :NERDTreeToggle<CR>
-
-"-----------------------------------------------------------------------------------------------------
 " Vim airline
 "-----------------------------------------------------------------------------------------------------
 let g:airline#extensions#tabline#enabled = 1
-
 let g:airline_powerline_fonts = 1
 
 "---------------------------------------------------------------------------
@@ -252,8 +230,15 @@ augroup END
 "-----------------------------------------------------------------------------------------------------
 " #COC
 "-----------------------------------------------------------------------------------------------------
-"inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-"autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
+let g:coc_global_extensions = [
+  \ 'coc-tsserver',
+  \ 'coc-tabnine',
+  \ 'coc-pairs',
+  \ 'coc-eslint',
+  \ 'coc-highlight',
+  \ 'coc-explorer',
+  \ 'coc-actions'
+  \]
 
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
@@ -274,6 +259,18 @@ endfunction
 autocmd CursorHold * silent call CocActionAsync('highlight')
 
 "-----------------------------------------------------------------------------------------------------
+" coc-command
+command! -nargs=0 EslintFix :CocCommand eslint.executeAutofix
+command! -nargs=0 TsserverFix :CocCommand tsserver.executeAutofix
+"-----------------------------------------------------------------------------------------------------
+
+
+"-----------------------------------------------------------------------------------------------------
+" coc-explorer
+nnoremap <space>e :CocCommand explorer<CR>
+"-----------------------------------------------------------------------------------------------------
+
+"-----------------------------------------------------------------------------------------------------
 " vim-closetag
 "-----------------------------------------------------------------------------------------------------
 let g:closetag_filenames = '*.xml,*.html'
@@ -292,17 +289,21 @@ nnoremap <C-v> "+p
 inoremap <C-v> <Esc>"+p A
 
 "-----------------------------------------------------------------------------------------------------
-" Echodoc
-"-----------------------------------------------------------------------------------------------------
-" Or, you could use vim's popup window feature.
-let g:echodoc#enable_at_startup = 1
-let g:echodoc#type = 'popup'
-set cmdheight=2
-" To use a custom highlight for the popup window,
-" change Pmenu to your highlight group
-highlight link EchoDocPopup Pmenu
-
-"-----------------------------------------------------------------------------------------------------
 " vim-javascript
 "-----------------------------------------------------------------------------------------------------
 let g:javascript_plugin_jsdoc = 1
+
+"-----------------------------------------------------------------------------------------------------
+" kristijanhusak/vim-js-file-import
+let g:js_file_import_use_fzf = 1
+"-----------------------------------------------------------------------------------------------------
+
+"-----------------------------------------------------------------------------------------------------
+" Telescope
+"-----------------------------------------------------------------------------------------------------
+map <C-p> <cmd>lua require('telescope.builtin').find_files()<cr>
+map fb <cmd>lua require('telescope.builtin').buffers()<cr>
+nnoremap <leader>ff <cmd>lua require('telescope.builtin').find_files()<cr>
+nnoremap <leader>fg <cmd>lua require('telescope.builtin').live_grep()<cr>
+nnoremap <leader>fb <cmd>lua require('telescope.builtin').buffers()<cr>
+nnoremap <leader>fh <cmd>lua require('telescope.builtin').help_tags()<cr>
